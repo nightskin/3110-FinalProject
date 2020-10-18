@@ -8,67 +8,31 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 40.0f;
 
     public Rigidbody2D rb;
-
     public Camera cam;
+    public float threshold;
 
-
-    Vector2 movement;
+    float distanceToMouse;
     Vector2 mousePosition;
-
-
-    // Start is called before the first frame update
+    float angle;
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        movement.x = Input.GetAxis("Horizontal");
-        movement.y = Input.GetAxis("Vertical");
-
-
         mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
-        
-
-        float x = Input.GetAxis("Horizontal");
-
-        transform.position = new Vector3(transform.position.x + x * Time.deltaTime * moveSpeed, transform.position.y, transform.position.z);
-
-        float y = Input.GetAxis("Vertical");
-
-        transform.position = new Vector3(transform.position.x , transform.position.y + y * Time.deltaTime * moveSpeed, transform.position.z);
-
-
-    }
-
-    void FixedUpdate()
-    {
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
-        Vector2 lookDir = mousePosition - rb.position;
-        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
-        rb.rotation = angle;
-
+        Vector2 pos = new Vector2(mousePosition.x, mousePosition.y);
+        distanceToMouse = Vector2.Distance(pos, mousePosition);
+        angle = -Mathf.Atan2(mousePosition.x, mousePosition.y) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(new Vector3(0,0,angle));
+            
+        if (Input.GetMouseButton(1)) // if right click
+        {
+            if (distanceToMouse >= threshold)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, mousePosition, moveSpeed * Time.deltaTime);
+            }
+        }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
