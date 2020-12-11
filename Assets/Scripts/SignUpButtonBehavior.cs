@@ -20,7 +20,7 @@ public class SignUpButtonBehavior : MonoBehaviour
 
     public void OnSignupButtonPressed()
     {
-        Debug.Log("Login Pressed");
+        Debug.Log("Signup Pressed");
         SceneManager.LoadScene("SignupScene");
         
 
