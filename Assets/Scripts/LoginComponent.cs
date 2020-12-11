@@ -10,20 +10,32 @@ public class LoginComponent : MonoBehaviour
     // public UdpClient udp;
 
     string RegisterAPI = "https://sur1nzicrh.execute-api.ca-central-1.amazonaws.com/default/Register";
+    string LoginAPI = "https://dte673qc5j.execute-api.ca-central-1.amazonaws.com/default/Login";
 
     // Start is called before the first frame update
     void Start()
     {
 
-        StartCoroutine(GetRequest(RegisterAPI));
+    }
+
+    public void UserLogin()
+    {
+        StartCoroutine(GetRequest(LoginAPI));
+
     }
 
 
+    public void UserRegister()
+    {
+        StartCoroutine(GetRequest(RegisterAPI));
+
+    }
+
+    
     IEnumerator GetRequest(string url)
     {
 
         yield return url;
     }
-
 
 }
