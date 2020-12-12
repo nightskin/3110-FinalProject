@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
-public class LoginButtonBehavior : MonoBehaviour
+public class PopUpButton : MonoBehaviour
 {
+
+    public Image Popup;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,10 +20,8 @@ public class LoginButtonBehavior : MonoBehaviour
         
     }
 
-    public void OnLoginButtonPressed()
+    public void popUpButton()
     {
-        Debug.Log("Login Pressed");
-        SceneManager.LoadScene("GameScene");
-
+        Destroy(Popup.gameObject);
     }
 }
