@@ -1,12 +1,18 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class LoginButtonBehavior : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Text userNameInput;
+    public Text passWordInput;
+
+    string LoginAPI = "https://dte673qc5j.execute-api.ca-central-1.amazonaws.com/default/Login";
+
     void Start()
     {
         

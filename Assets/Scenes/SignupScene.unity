@@ -428,7 +428,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   userNameInput: {fileID: 890492909}
   passWordInput: {fileID: 584477723}
-  popupRef: {fileID: 0}
+  popupRef: {fileID: 5773373111856265568, guid: 625835ea5fa78594e822d71ea61a6bab, type: 3}
+  canvas: {fileID: 1082379713}
 --- !u!1 &890492907
 GameObject:
   m_ObjectHideFlags: 0

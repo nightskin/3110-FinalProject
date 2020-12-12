@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
@@ -15,7 +16,6 @@ public class RegisterButton : MonoBehaviour
     public Image popupRef;
 
     string RegisterAPI = "https://sur1nzicrh.execute-api.ca-central-1.amazonaws.com/default/Register";
-    string LoginAPI = "https://dte673qc5j.execute-api.ca-central-1.amazonaws.com/default/Login";
 
 
     string Username;
@@ -23,6 +23,7 @@ public class RegisterButton : MonoBehaviour
 
     GameObject textresp;
 
+    public Canvas canvas; 
     // Update is called once per frame
     void Update()
     {
@@ -36,6 +37,7 @@ public class RegisterButton : MonoBehaviour
     {
         Debug.Log("Register Pressed");
         UserRegister();
+
     }
     
 
@@ -66,21 +68,24 @@ public class RegisterButton : MonoBehaviour
 
         // return msg
         string responseTxt = webRequest.downloadHandler.text;
-        if (responseTxt == "User already exist")
+        Debug.Log(responseTxt);
+        
+        if (responseTxt == "\"User already exist\"")
         {
-
-            Instantiate(popupRef);
-            textresp =  GameObject.Find("Response");
+            Debug.Log(responseTxt);
+            // Instantiate(popupRef);
             // textresp.text = "asdfasdf";
         }
         
-        if (responseTxt == "User already exist")
+        if (responseTxt == "\"Registration success\"")
         {
-            
+            Debug.Log(responseTxt);
+            SceneManager.LoadScene("LoginScene");
         }
 
-        if (responseTxt == "Please enter account name and password")
+        if (responseTxt == "\"Please enter account name and password\"")
         {
+            Debug.Log(responseTxt);
             
         }
     }
