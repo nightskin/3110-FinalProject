@@ -33,8 +33,9 @@ public class RegisterButton : MonoBehaviour
         Password = passWordInput.text;
 
         // reconnect if no response
-        if (responseTxt == "" && Time.frameCount % 240 == 0 && pressed)
+        if (responseTxt == ""  && pressed)
         {
+            pressed = false;
             Debug.Log("Reconnecting");
             StartCoroutine(GetRequest(RegisterAPI));
         }
@@ -70,7 +71,8 @@ public class RegisterButton : MonoBehaviour
     {
         popuptext.text = "Loading...";
         popupRef.gameObject.SetActive(true);
-
+        pressed = false;
+        
         // build request
         string regURL = url + "?accountName=" + Username + "&password=" + Password;
         Debug.Log(regURL);
@@ -88,6 +90,10 @@ public class RegisterButton : MonoBehaviour
         if (responseTxt != "")
         {
             pressed = false;
+        }
+        else
+        {
+            pressed = true;
         }
 
 

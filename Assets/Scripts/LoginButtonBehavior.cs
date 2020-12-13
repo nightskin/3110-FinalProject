@@ -23,6 +23,7 @@ public class LoginButtonBehavior : MonoBehaviour
     bool pressed = false;
     string LoginAPI = "https://dte673qc5j.execute-api.ca-central-1.amazonaws.com/default/Login";
 
+    int retry = 0;
 
 
     // Update is called once per frame
@@ -31,10 +32,18 @@ public class LoginButtonBehavior : MonoBehaviour
         Username = userNameInput.text;
         Password = passWordInput.text;
 
-        if (responseTxt == "" && Time.frameCount % 240 == 0 && pressed)
+        if (responseTxt == "" && pressed)
         {
+            pressed = false;
+            retry++;
             Debug.Log("Reconnecting");
             StartCoroutine(GetRequest(LoginAPI));
+        }
+
+        if (retry > 10)
+        {
+            popuptext.text = "No Connection";
+            pressed = false;
         }
     }
 
@@ -44,20 +53,16 @@ public class LoginButtonBehavior : MonoBehaviour
         Debug.Log("Login Pressed");
         responseTxt = "";
         pressed = true;
-        UserLogin();
-
-    }
-
-
-    public void UserLogin()
-    {
         StartCoroutine(GetRequest(LoginAPI));
+
     }
 
 
 
     IEnumerator GetRequest(string url)
     {
+        pressed = false;
+
         popuptext.text = "Loading...";
         popupRef.gameObject.SetActive(true);
 
@@ -76,7 +81,11 @@ public class LoginButtonBehavior : MonoBehaviour
         // stop reconnecting
         if (responseTxt != "")
         {
-            pressed = false;    
+            pressed = false;
+        }
+        else
+        {
+            pressed = true;
         }
 
 

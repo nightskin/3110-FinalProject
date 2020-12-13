@@ -33,6 +33,7 @@ public class UserProfile : MonoBehaviour
     UnityWebRequest webRequest;
     string responseTxt;
     Uprofile temp;
+    bool refreshing;
 
     private void Start()
     {
@@ -43,7 +44,7 @@ public class UserProfile : MonoBehaviour
 
     void Update()
     {
-        if (responseTxt == "" && Time.frameCount % 240 == 0 )
+        if (responseTxt == "" && !refreshing )
         {
             Debug.Log("Reconnecting");
             StartCoroutine(GetRequest(UserProfileAPI));
@@ -54,6 +55,7 @@ public class UserProfile : MonoBehaviour
 
     IEnumerator GetRequest(string url)
     {
+        refreshing = true;
         // get user info component
         comp = GameObject.FindGameObjectWithTag("InfoComp").GetComponent<UinfoComp>();
 
@@ -71,6 +73,11 @@ public class UserProfile : MonoBehaviour
         // get response
         responseTxt = webRequest.downloadHandler.text;
         
+        if (responseTxt != "")
+        {
+            refreshing = false;    
+        }
+
         // reaplicate json response
         temp = JsonUtility.FromJson<Uprofile>(responseTxt);
 
