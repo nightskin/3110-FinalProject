@@ -20,10 +20,8 @@ public class RegisterButton : MonoBehaviour
 
     string Username;
     string Password;
+    public Text popuptext;
 
-    GameObject textresp;
-
-    public Canvas canvas; 
     // Update is called once per frame
     void Update()
     {
@@ -41,11 +39,7 @@ public class RegisterButton : MonoBehaviour
     }
     
 
-    // public void UserLogin()
-    // {
-    //     StartCoroutine(GetRequest(LoginAPI));
 
-    // }
 
 
     public void UserRegister()
@@ -68,26 +62,51 @@ public class RegisterButton : MonoBehaviour
 
         // return msg
         string responseTxt = webRequest.downloadHandler.text;
-        Debug.Log(responseTxt);
+        popuptext.text = responseTxt;
         
         if (responseTxt == "\"User already exist\"")
         {
             Debug.Log(responseTxt);
-            // Instantiate(popupRef);
-            // textresp.text = "asdfasdf";
+            StartCoroutine(Popup());
         }
         
         if (responseTxt == "\"Registration success\"")
         {
             Debug.Log(responseTxt);
-            SceneManager.LoadScene("LoginScene");
+            StartCoroutine(Popup());
+
+            StartCoroutine(MEnu());
+
         }
 
         if (responseTxt == "\"Please enter account name and password\"")
         {
             Debug.Log(responseTxt);
-            
+            StartCoroutine(Popup());
         }
+    }
+    IEnumerator MEnu()
+    {
+        
+        popupRef.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3);
+        // popupRef.gameObject.SetActive(false);
+        SceneManager.LoadScene("LoginScene");
+        
+
+
+    }
+
+
+    IEnumerator Popup()
+    {
+        
+        popupRef.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3);
+        // popupRef.gameObject.SetActive(false);
+        
+
+
     }
 
 }

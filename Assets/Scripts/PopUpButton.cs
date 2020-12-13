@@ -11,6 +11,7 @@ public class PopUpButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Popup.gameObject.SetActive(false);
         
     }
 
@@ -22,6 +23,7 @@ public class PopUpButton : MonoBehaviour
 
     public void popUpButton()
     {
-        Destroy(Popup.gameObject);
+        Popup.gameObject.SetActive(false);
+
     }
 }
