@@ -24,7 +24,7 @@ public class RegisterButton : MonoBehaviour
     string responseTxt;
     bool pressed = false;
 
-
+    public AudioSource boop;
 
     // Update is called once per frame
     void Update()
@@ -52,17 +52,9 @@ public class RegisterButton : MonoBehaviour
     }
     
 
-
-
-
-
-
-
-
-
-
     public void UserRegister()
     {
+        boop.Play(0);
         StartCoroutine(GetRequest(RegisterAPI));
     }
 

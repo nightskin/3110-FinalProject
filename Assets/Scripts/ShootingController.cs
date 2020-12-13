@@ -7,7 +7,7 @@ public class ShootingController : MonoBehaviour
 
     public static AudioClip bang;
     
-    static AudioSource AUsrc;
+    public AudioSource AUsrc;
 
 
     // public AudioSource bang;
@@ -22,9 +22,6 @@ public class ShootingController : MonoBehaviour
     void Start()
     {
 
-        // bang = Sound.Load<AudioClip>("shoot1");
-
-        AUsrc = GetComponent<AudioSource>();
     }
 
 
@@ -33,6 +30,7 @@ public class ShootingController : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
+            AUsrc.Play(0);
             Shoot();
         }
     }

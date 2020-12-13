@@ -25,6 +25,8 @@ public class LoginButtonBehavior : MonoBehaviour
 
     int retry = 0;
 
+    public AudioSource boop;
+
 
     // Update is called once per frame
     void Update()
@@ -51,6 +53,7 @@ public class LoginButtonBehavior : MonoBehaviour
     public void OnLoginButtonPressed()
     {
         Debug.Log("Login Pressed");
+        boop.Play(0);
         responseTxt = "";
         pressed = true;
         StartCoroutine(GetRequest(LoginAPI));

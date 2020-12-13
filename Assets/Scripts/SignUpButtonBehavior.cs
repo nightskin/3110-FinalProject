@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class SignUpButtonBehavior : MonoBehaviour
 {
+    public AudioSource boop;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +22,8 @@ public class SignUpButtonBehavior : MonoBehaviour
 
     public void OnSignupButtonPressed()
     {
+
+        boop.Play(0);
         Debug.Log("Signup Pressed");
         SceneManager.LoadScene("SignupScene");
         

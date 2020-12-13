@@ -8,9 +8,12 @@ public class UinfoComp : MonoBehaviour
     public string client_username;
     public float user_x;
     public float user_y;
+    public AudioSource BGMusic;
 
     void Start()
     {
+        BGMusic.Play(0);
+
         if (GameObject.FindGameObjectsWithTag("InfoComp").Length > 1)
         {
             Destroy(gameObject);

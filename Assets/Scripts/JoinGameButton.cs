@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class JoinGameButton : MonoBehaviour
 {
+    public AudioSource boop;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,4 +18,18 @@ public class JoinGameButton : MonoBehaviour
     {
         
     }
+
+    public void JoinGameOnPress()
+    {
+        boop.Play(0);
+        
+        var music = GameObject.FindGameObjectWithTag("InfoComp").GetComponent<UinfoComp>();
+        music.BGMusic.Stop();
+
+        Debug.Log("Joining Game");
+        SceneManager.LoadScene("GameScene");
+
+
+    }
+
 }

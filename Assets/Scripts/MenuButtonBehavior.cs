@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MenuButtonBehavior : MonoBehaviour
 {
+    public AudioSource boop;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +21,8 @@ public class MenuButtonBehavior : MonoBehaviour
 
     public void OnMenuButtonPressed()
     {
+
+        boop.Play(0);
         Debug.Log("Menu Pressed");
         SceneManager.LoadScene("LoginScene");
         
