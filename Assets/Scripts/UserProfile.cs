@@ -7,11 +7,11 @@ using UnityEngine.Networking;
 [System.Serializable]
 public class Uprofile
 {
-    public int ulevel;
-    public int udeath;
-    public string upwd;
-    public string uname;
-    public int ukill;
+    public int Level;
+    public int Death;
+    public string Password;
+    public string Accountname;
+    public int Kill;
 
 }
 
@@ -57,14 +57,15 @@ public class UserProfile : MonoBehaviour
         string responseTxt = webRequest.downloadHandler.text;
         
         
-        Uprofile temptasks = JsonUtility.FromJson<Uprofile>(responseTxt);
+        Uprofile temp = JsonUtility.FromJson<Uprofile>(responseTxt);
 
-        Debug.Log(temptasks);
+        Debug.Log(temp.Death);
 
         
         uname.text = comp.client_username;
-        ulevel.text = "0";
-
+        ulevel.text = temp.Level.ToString();
+        ukcount.text = temp.Kill.ToString();
+        udcount.text = temp.Death.ToString();
 
         
 
