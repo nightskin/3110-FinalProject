@@ -18,21 +18,32 @@ public class LoginButtonBehavior : MonoBehaviour
     public Text passWordInput;
     public Text popuptext;
 
+    string responseTxt;
 
+    bool pressed = false;
     string LoginAPI = "https://dte673qc5j.execute-api.ca-central-1.amazonaws.com/default/Login";
+
+
 
     // Update is called once per frame
     void Update()
     {
         Username = userNameInput.text;
         Password = passWordInput.text;
+
+        if (responseTxt == "" && Time.frameCount % 240 == 0 && pressed)
+        {
+            Debug.Log("Reconnecting");
+            StartCoroutine(GetRequest(LoginAPI));
+        }
     }
 
 
     public void OnLoginButtonPressed()
     {
         Debug.Log("Login Pressed");
-        // SceneManager.LoadScene("GameScene");
+        responseTxt = "";
+        pressed = true;
         UserLogin();
 
     }
@@ -47,21 +58,30 @@ public class LoginButtonBehavior : MonoBehaviour
 
     IEnumerator GetRequest(string url)
     {
+        popuptext.text = "Loading...";
+        popupRef.gameObject.SetActive(true);
 
         // build request
         string regURL = url + "?accountName=" + Username + "&password=" + Password;
         Debug.Log(regURL);
         UnityWebRequest webRequest = UnityWebRequest.Get(regURL);
-        
+
         // send request
         yield return webRequest.SendWebRequest();
 
 
         // return msg
-        string responseTxt = webRequest.downloadHandler.text;
+        responseTxt = webRequest.downloadHandler.text;
+
+        // stop reconnecting
+        if (responseTxt != "")
+        {
+            pressed = false;    
+        }
+
+
         popuptext.text = responseTxt;
 
-        Debug.Log(responseTxt);
         
         if (responseTxt == "\"Wrong user name or password\"")
         {
@@ -71,13 +91,12 @@ public class LoginButtonBehavior : MonoBehaviour
         
         if (responseTxt == "\"Login success\"")
         {
+            Debug.Log(responseTxt);
+
             // set user name to the client component
             var comp = GameObject.FindGameObjectWithTag("InfoComp").GetComponent<UinfoComp>();
             comp.client_username = Username;
-
-            Debug.Log(responseTxt);
             StartCoroutine(StartGame());
-            // SceneManager.LoadScene("GameScene");
         }
 
         if (responseTxt == "\"Please enter account name and password\"")
@@ -92,7 +111,6 @@ public class LoginButtonBehavior : MonoBehaviour
         
         popupRef.gameObject.SetActive(true);
         yield return new WaitForSeconds(1);
-        // popupRef.gameObject.SetActive(false);
         SceneManager.LoadScene("UserProfile");
         
     }
@@ -102,7 +120,6 @@ public class LoginButtonBehavior : MonoBehaviour
         
         popupRef.gameObject.SetActive(true);
         yield return new WaitForSeconds(3);
-        // popupRef.gameObject.SetActive(false);
         
     }
 

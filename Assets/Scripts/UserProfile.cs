@@ -27,46 +27,66 @@ public class UserProfile : MonoBehaviour
     public Text ukcount;
     public Text udcount;
     
+
+
+    UinfoComp comp;
+    UnityWebRequest webRequest;
+    string responseTxt;
+    Uprofile temp;
+
     private void Start()
     {
+        responseTxt = "";
         StartCoroutine(GetRequest(UserProfileAPI));
-        
-
+    
     }
 
     void Update()
     {
-            
+        if (responseTxt == "" && Time.frameCount % 240 == 0 )
+        {
+            Debug.Log("Reconnecting");
+            StartCoroutine(GetRequest(UserProfileAPI));
+        }
+        
     }
 
 
     IEnumerator GetRequest(string url)
     {
-        var comp = GameObject.FindGameObjectWithTag("InfoComp").GetComponent<UinfoComp>();
+        // get user info component
+        comp = GameObject.FindGameObjectWithTag("InfoComp").GetComponent<UinfoComp>();
 
         // build request
         string regURL = url + "?accountName=" + comp.client_username;
         Debug.Log(regURL);
-        UnityWebRequest webRequest = UnityWebRequest.Get(regURL);
-        
+        webRequest = UnityWebRequest.Get(regURL);
+        var send = webRequest.SendWebRequest();
+        Debug.Log(send);
+
         // send request
-        yield return webRequest.SendWebRequest();
+        yield return send;
 
-
-        // return msg
-        string responseTxt = webRequest.downloadHandler.text;
+        Debug.Log("got response");
+        // get response
+        responseTxt = webRequest.downloadHandler.text;
         
-        
-        Uprofile temp = JsonUtility.FromJson<Uprofile>(responseTxt);
+        // reaplicate json response
+        temp = JsonUtility.FromJson<Uprofile>(responseTxt);
 
-        Debug.Log(temp.Death);
 
-        
+
         uname.text = comp.client_username;
-        ulevel.text = temp.Level.ToString();
-        ukcount.text = temp.Kill.ToString();
-        udcount.text = temp.Death.ToString();
+        if (temp != null)
+        {
+            ulevel.text = temp.Level.ToString();
+            ukcount.text = temp.Kill.ToString();
+            udcount.text = temp.Death.ToString();
+            
+        }
 
+
+        
         
 
     }

@@ -21,6 +21,10 @@ public class RegisterButton : MonoBehaviour
     string Username;
     string Password;
     public Text popuptext;
+    string responseTxt;
+    bool pressed = false;
+
+
 
     // Update is called once per frame
     void Update()
@@ -28,16 +32,30 @@ public class RegisterButton : MonoBehaviour
         Username = userNameInput.text;
         Password = passWordInput.text;
 
+        // reconnect if no response
+        if (responseTxt == "" && Time.frameCount % 240 == 0 && pressed)
+        {
+            Debug.Log("Reconnecting");
+            StartCoroutine(GetRequest(RegisterAPI));
+        }
 
     }
 
     public void OnRegister()
     {
         Debug.Log("Register Pressed");
+        responseTxt = "";
+        pressed = true;
         UserRegister();
 
     }
     
+
+
+
+
+
+
 
 
 
@@ -50,6 +68,8 @@ public class RegisterButton : MonoBehaviour
     
     IEnumerator GetRequest(string url)
     {
+        popuptext.text = "Loading...";
+        popupRef.gameObject.SetActive(true);
 
         // build request
         string regURL = url + "?accountName=" + Username + "&password=" + Password;
@@ -58,12 +78,24 @@ public class RegisterButton : MonoBehaviour
         
         // send request
         yield return webRequest.SendWebRequest();
-
+        
 
         // return msg
-        string responseTxt = webRequest.downloadHandler.text;
+        responseTxt = webRequest.downloadHandler.text;
+
+
+        // stop reconnecting
+        if (responseTxt != "")
+        {
+            pressed = false;
+        }
+
+
+        // set popup text
         popuptext.text = responseTxt;
         
+
+        // return response to client
         if (responseTxt == "\"User already exist\"")
         {
             Debug.Log(responseTxt);
@@ -73,8 +105,6 @@ public class RegisterButton : MonoBehaviour
         if (responseTxt == "\"Registration success\"")
         {
             Debug.Log(responseTxt);
-            StartCoroutine(Popup());
-
             StartCoroutine(MEnu());
 
         }
@@ -85,28 +115,22 @@ public class RegisterButton : MonoBehaviour
             StartCoroutine(Popup());
         }
     }
+
+
     IEnumerator MEnu()
     {
         
         popupRef.gameObject.SetActive(true);
-        yield return new WaitForSeconds(3);
-        // popupRef.gameObject.SetActive(false);
+        yield return new WaitForSeconds(1);
         SceneManager.LoadScene("LoginScene");
-        
-
 
     }
 
 
     IEnumerator Popup()
     {
-        
         popupRef.gameObject.SetActive(true);
         yield return new WaitForSeconds(3);
-        // popupRef.gameObject.SetActive(false);
-        
-
-
     }
 
 }
