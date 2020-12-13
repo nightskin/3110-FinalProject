@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Dum : MonoBehaviour
 {
+
+    public AudioSource AUsrc;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +20,7 @@ public class Dum : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D other) {
+        AUsrc.Play();
         Destroy(gameObject);    
     }
 }

@@ -7,7 +7,7 @@ public class ShootingController : MonoBehaviour
 
     public static AudioClip bang;
     
-    static AudioSource AUsrc;
+    public AudioSource AUsrc;
 
 
     // public AudioSource bang;
@@ -41,11 +41,13 @@ public class ShootingController : MonoBehaviour
 
     void Shoot()
     {
+        
+        
         GameObject bullet = Instantiate(bulletPrefab, firepoint.position, firepoint.rotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
 
         // bang.Play();
-        // AUsrc.playOneShot(bang);
+        AUsrc.Play(0);
 
         rb.AddForce(firepoint.up * bulletForce, ForceMode2D.Impulse);
         Destroy(bullet, 2f);
