@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class JoinGameButton : MonoBehaviour
 {
     public AudioSource boop;
-    
+
     // Start is called before the first frame update
     void Start()
     {

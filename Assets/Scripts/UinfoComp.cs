@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UinfoComp : MonoBehaviour
 {
-    
+
     public string client_username;
 
     public AudioSource BGMusic;
@@ -12,19 +12,24 @@ public class UinfoComp : MonoBehaviour
     void Start()
     {
         BGMusic.Play(0);
-        if (GameObject.FindGameObjectsWithTag("InfoComp").Length > 1)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Debug.Log("Init Uinfocomp");
-        }
-    }
 
-    private void Update()
-    {
-        // Debug.Log(client_username);
-    }
+        void Start()
+        {
 
+            if (GameObject.FindGameObjectsWithTag("InfoComp").Length > 1)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Debug.Log("Init Uinfocomp");
+            }
+        }
+
+        void Update()
+        {
+            // Debug.Log(client_username);
+        }
+
+    }
 }
