@@ -17,10 +17,7 @@ public class PlayerController : MonoBehaviour
     float distanceToMouse;
     Vector2 mousePosition;
     float angle;
-    void Start()
-    {
-        BGMusic.Play(0);
-    }
+
 
     void Update()
     {

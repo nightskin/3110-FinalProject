@@ -53,7 +53,6 @@ public class NWcomp : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Connecting...");
 
         // get user info component
         // uinfoRef = GameObject.FindGameObjectWithTag("InfoComp").GetComponent<UinfoComp>();
@@ -61,16 +60,21 @@ public class NWcomp : MonoBehaviour
         // Connect to the client.
         udp = new UdpClient();
         udp.Connect("3.96.203.122", 12345);
+        Debug.Log("Connecting...");
 
-        // receive message from the server
-        udp.BeginReceive(new AsyncCallback(OnReceived), udp);
 
         // send to server
         Byte[] sendBytes = Encoding.ASCII.GetBytes("connected");
         udp.Send(sendBytes, sendBytes.Length);
 
+        // receive message from the server
+        udp.BeginReceive(new AsyncCallback(OnReceived), udp);
+        
+        
         // Repeat calling (Method, time, repeatRate)
         InvokeRepeating("HeartBeat", 1, 1);
+
+
     }
 
 
@@ -78,6 +82,7 @@ public class NWcomp : MonoBehaviour
 
     void OnReceived(IAsyncResult result)
     {
+        Debug.Log("OnReceived Called");
         // this is what had been passed into BeginReceive as the second parameter:
         UdpClient socket = result.AsyncState as UdpClient;
 
@@ -89,13 +94,14 @@ public class NWcomp : MonoBehaviour
         
         // do what you'd like with `message` here:
         string returnData = Encoding.ASCII.GetString(message);
-        Debug.Log(returnData);
+        
+        Debug.Log("Server: " + returnData);
 
 
         // serverData = JsonUtility.FromJson<ClientInGameData>(returnData);
         // Debug.Log(serverData);
 
-
+        socket.BeginReceive(new AsyncCallback(OnReceived), socket);
 
     }
 
@@ -130,8 +136,9 @@ public class NWcomp : MonoBehaviour
 
 
 
-    void OnDestroy()
-    {
-        udp.Dispose();
-    }
+    // void OnDestroy()
+    // {
+    //     Debug.Log("udp dispose");
+    //     udp.Dispose();
+    // }
 }

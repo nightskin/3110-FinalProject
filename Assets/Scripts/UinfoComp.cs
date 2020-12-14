@@ -13,8 +13,7 @@ public class UinfoComp : MonoBehaviour
     {
         BGMusic.Play(0);
 
-        void Start()
-        {
+
 
             if (GameObject.FindGameObjectsWithTag("InfoComp").Length > 1)
             {
@@ -24,12 +23,11 @@ public class UinfoComp : MonoBehaviour
             {
                 Debug.Log("Init Uinfocomp");
             }
-        }
 
-        void Update()
-        {
-            // Debug.Log(client_username);
-        }
-
+    }
+  
+    void Update()
+    {
+        // Debug.Log(client_username);
     }
 }
