@@ -23,7 +23,7 @@ public class SignUpButtonBehavior : MonoBehaviour
         Debug.Log("Signup Pressed");
         SceneManager.LoadScene("SignupScene");
         
-
+        
 
     }
 }

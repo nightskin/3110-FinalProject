@@ -64,7 +64,6 @@ public class UserProfile : MonoBehaviour
         Debug.Log(regURL);
         webRequest = UnityWebRequest.Get(regURL);
         var send = webRequest.SendWebRequest();
-        Debug.Log(send);
 
         // send request
         yield return send;

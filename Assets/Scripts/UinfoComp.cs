@@ -6,8 +6,6 @@ public class UinfoComp : MonoBehaviour
 {
     
     public string client_username;
-    public float user_x;
-    public float user_y;
 
     void Start()
     {

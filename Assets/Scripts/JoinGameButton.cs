@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 
 public class JoinGameButton : MonoBehaviour
 {
@@ -14,5 +17,10 @@ public class JoinGameButton : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void OnJoinGamePressed()
+    {
+        SceneManager.LoadScene("GameScene");
     }
 }
