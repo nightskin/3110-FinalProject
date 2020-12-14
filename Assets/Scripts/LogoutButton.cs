@@ -14,10 +14,10 @@ public class LogoutButton : MonoBehaviour
 
     public void LogoutOnPress()
     {
-        boop.Play(0);
         var comp = GameObject.FindGameObjectWithTag("InfoComp").GetComponent<UinfoComp>();
         comp.client_username = "";
         SceneManager.LoadScene("LoginScene");
+        // boop.Play(0);
     }
 
 }
