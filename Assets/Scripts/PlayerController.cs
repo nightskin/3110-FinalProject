@@ -11,12 +11,15 @@ public class PlayerController : MonoBehaviour
     public Camera cam;
     public float threshold;
 
+
+    public AudioSource BGMusic;
+
     float distanceToMouse;
     Vector2 mousePosition;
     float angle;
     void Start()
     {
-        
+        BGMusic.Play(0);
     }
 
     void Update()
